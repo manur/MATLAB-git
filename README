@@ -1,7 +1,14 @@
+
+-- Versioning --
 This repo contains the latest version of git.m.
 Whenever there is a stable release, the submission on MATLAB Central's File Exchange will be periodically synched from the latest stable release here.
 
 The generic version is git.m, tested to work on OS X and GNU/Linux.
 Windows derivatives are separate submissions by third-parties and are listed in the Windows folder.
+
+-- To make changes --
+Fork this project from Github, make your changes, and issue a pull request so I can quickly consider them.
+If you're new to Git and Github, this is really easy:
+http://help.github.com/send-pull-requests/
 
 
