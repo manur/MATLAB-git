@@ -67,11 +67,11 @@ function git(varargin)
         % Otherwise we can call the real git with the arguments
         arguments = parse(varargin{:});  
         if ispc
-          prog = 'type'
+          prog = '';
         else
-          prog = 'cat'
+          prog = ' | cat';
         end
-        [~,result] = system(['git ',arguments,' | ',prog]);
+        [~,result] = system(['git ',arguments,prog]);
         disp(result)
     end
 end
