@@ -54,9 +54,8 @@ function git(varargin)
 
 
 % Test to see if git is installed
-[status,~] = system('git status');
-% if git is in the path this will return a status of 0 or 128
-% depending on whether we are sitting in a repository or not
+[status,~] = system('git --version');
+% if git is in the path this will return a status of 0
 % it will return a 1 only if the command is not found
 
     if (status==1)
