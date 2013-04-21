@@ -71,7 +71,14 @@ function git(varargin)
           prog = ' | cat';
         end
         [~,result] = system(['git ',arguments,prog]);
+
+        % save current status of pagination, then turn it on
+        morestatus=get(0,'More');
+        more('on')
+        % show result
         disp(result)
+        % revert pagination to previous status
+        more(morestatus)
     end
 end
 
