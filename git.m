@@ -1,4 +1,4 @@
-function git(varargin)
+function result = git(varargin)
 % A thin MATLAB wrapper for Git.
 % 
 %   Short instructions:
@@ -48,9 +48,13 @@ function git(varargin)
 % v0.2,     11 March 2011   -- TH: Support for PCs
 % 
 % v0.3,     12 March 2011   -- MR: Fixed man pages hang bug using redirection
+%
+% v0.4,     20 November 2013-- TN: Searching for git in default directories,
+%                               returning results as variable
 % 
 % Contributors: (MR) Manu Raghavan
 %               (TH) Timothy Hansell
+%               (TN) Tassos Natsakis
 
 
 % Test to see if git is installed
@@ -58,10 +62,26 @@ function git(varargin)
 % if git is in the path this will return a status of 0
 % it will return a 1 only if the command is not found
 
-    if (status==1)
-        % If GIT Is NOT installed, then this should end the function.
-        fprintf('git is not installed\n%s\n',...
-               'Download it at http://git-scm.com/download');
+    if status
+        % Checking if git exists in the default installation folders (for
+        % Windows)
+        if ispc
+            search = system('dir /s /b "c:\Program Files\Git\bin\git.exe');
+            searchx86 = system('dir /s /b "c:\Program Files (x86)\Git\bin\git.exe');
+        else
+            search = 0;
+            searchx86 = 0;
+        end
+        
+        if (search||searchx86)
+            % If git exists but the status is 0, then it means that it is
+            % not in the path.
+            result = 'git is not included in the path';            
+        else
+            % If git is NOT installed, then this should end the function.
+            result = sprintf('git is not installed\n%s\n',...
+                   'Download it at http://git-scm.com/download');
+        end
     else
         % Otherwise we can call the real git with the arguments
         arguments = parse(varargin{:});  
@@ -71,14 +91,6 @@ function git(varargin)
           prog = ' | cat';
         end
         [~,result] = system(['git ',arguments,prog]);
-
-        % save current status of pagination, then turn it on
-        morestatus=get(0,'More');
-        more('on')
-        % show result
-        disp(result)
-        % revert pagination to previous status
-        more(morestatus)
     end
 end
 
