@@ -1,4 +1,4 @@
-function git(varargin)
+function result = git(varargin)
 % A thin MATLAB wrapper for Git.
 % 
 %   Short instructions:
@@ -60,7 +60,7 @@ function git(varargin)
 
     if (status==1)
         % If GIT Is NOT installed, then this should end the function.
-        fprintf('git is not installed\n%s\n',...
+        result = sprintf('git is not installed\n%s\n',...
                'Download it at http://git-scm.com/download');
     else
         % Otherwise we can call the real git with the arguments
@@ -73,12 +73,12 @@ function git(varargin)
         [~,result] = system(['git ',arguments,prog]);
 
         % save current status of pagination, then turn it on
-        morestatus=get(0,'More');
-        more('on')
+        % morestatus=get(0,'More');
+        % more('on')
         % show result
-        disp(result)
+        % disp(result)
         % revert pagination to previous status
-        more(morestatus)
+        % more(morestatus)
     end
 end
 
