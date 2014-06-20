@@ -90,6 +90,10 @@ function result = git(varargin)
         else
           prog = ' | cat';
         end
+		if strcmp(arguments, 'commit ')
+			answer = inputdlg('Comments:','Commit''s comments');
+			arguments = [arguments '-m"' char(answer) '"'];
+		end
         [~,result] = system(['git ',arguments,prog]);
     end
 end
