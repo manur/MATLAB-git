@@ -1,4 +1,4 @@
-function result = git(varargin)
+function git(varargin)
 % A thin MATLAB wrapper for Git.
 % 
 %   Short instructions:
@@ -52,15 +52,23 @@ function result = git(varargin)
 % v0.4,     20 November 2013-- TN: Searching for git in default directories,
 %                               returning results as variable
 % 
+% v0.5,     22 January 2015 -- TP: Suppressed printing of ans before
+%                                  git command output
+% 
 % Contributors: (MR) Manu Raghavan
 %               (TH) Timothy Hansell
 %               (TN) Tassos Natsakis
+%               (TP) Tyler Parsons
+%
 
 
-% Test to see if git is installed
-[status,~] = system('git --version');
-% if git is in the path this will return a status of 0
-% it will return a 1 only if the command is not found
+    % Test to see if git is installed
+    [status,~] = system('git --version');
+    % if git is in the path this will return a status of 0
+    % it will return a 1 only if the command is not found
+
+    % git command output
+    result = '';
 
     if status
         % Checking if git exists in the default installation folders (for
@@ -96,6 +104,11 @@ function result = git(varargin)
 		end
         [~,result] = system(['git ',arguments,prog]);
     end
+    
+    % Display result instead of returning it
+    % to suppress output of ans
+    disp(result);
+    
 end
 
 function space_delimited_list = parse(varargin)
