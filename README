@@ -2,12 +2,9 @@
 This repo contains the latest version of git.m.
 Whenever there is a stable release, the submission on MATLAB Central's File Exchange will be periodically synched from the latest stable release here.
 
-The generic version is git.m, tested to work on OS X and GNU/Linux.
-Windows derivatives are separate submissions by third-parties and are listed in the Windows folder.
-
 -- OS, Distributions --
-This version was developed on OS X, but is expected to work on BSD and Linux flavors alike.
-Windows is a different beast, and it's never been tested on Windows.
+This version was developed on OS X, but is expected to work on POSIX-compliant systems like OS X, BSD, and GNU/Linux.
+Windows is a different beast, and it should work as well anecdotally, but your mileage may vary.
 
 -- To make changes --
 Fork this project from Github, make your changes, and issue a pull request so I can quickly consider them.
