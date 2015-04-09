@@ -1,4 +1,4 @@
-function git(varargin)
+function cmdout =  git(varargin)
 % A thin MATLAB wrapper for Git.
 %
 %   Short instructions:
@@ -57,13 +57,16 @@ function git(varargin)
 %
 % v0.6,     26 January 2015 -- HG: Add path to git
 %
+% v0.7      09 April 2015   -- VF: If user requests it, return Git results
+%                              as a variable instead of displaying them.
+%
 % Contributors: (MR) Manu Raghavan
 %               (TH) Timothy Hansell
 %               (TN) Tassos Natsakis
 %               (TP) Tyler Parsons
 %               (HG) Han Geerligs
+%               (VF) Vadim Frolov
 %
-
 orgpath=getenv('PATH');
 quit_function=0;
 try
@@ -71,10 +74,10 @@ try
     [status,~] = system('git --version');
     % if git is in the path this will return a status of 0
     % it will return a 1 only if the command is not found
-    
+
     % git command output
     result = '';
-    
+
     if status
         % Checking if git exists in the default installation folders (for
         % Windows)
@@ -85,7 +88,7 @@ try
             search = 0;
             searchx86 = 0;
         end
-        
+
         if ~(search||searchx86)
             % If git is NOT installed, then this should end the function.
             result = sprintf('git is not installed\n%s\n',...
@@ -93,7 +96,7 @@ try
             quit_function=1; % set quit_function flag: only result is displayed
         end
     end
-    
+
     % if quit_function then only display message
     if ~quit_function
         % If git exists but the status is 1, then it means that it is
@@ -107,7 +110,7 @@ try
             end
             setenv('PATH',[gitpath pathsep orgpath]); % add path to git
         end
-        
+
         % We can call the real git with the arguments
         arguments = parse(varargin{:});
         if ispc
@@ -121,10 +124,14 @@ try
         end
         [~,result] = system(['git ',arguments,prog]);
     end
-    % Display result instead of returning it
-    % to suppress output of ans
-    disp(result);
-    
+    if nargout >= 1
+        cmdout = strtrim(result);
+    else
+        % Display result instead of returning it
+        % to suppress output of ans
+        disp(result);
+    end
+
     % restore the original path
     setenv(orgpath);
 catch
