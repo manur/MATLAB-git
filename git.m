@@ -1,4 +1,4 @@
-function cmdout =  git(varargin)
+function [cmdout, statout] =  git(varargin)
 % A thin MATLAB wrapper for Git.
 %
 %   Short instructions:
@@ -60,12 +60,16 @@ function cmdout =  git(varargin)
 % v0.7      09 April 2015   -- VF: If user requests it, return Git results
 %                              as a variable instead of displaying them.
 %
+% v0.8      24 Juli 2015    -- MvdL: Return status output
+%
+%
 % Contributors: (MR) Manu Raghavan
 %               (TH) Timothy Hansell
 %               (TN) Tassos Natsakis
 %               (TP) Tyler Parsons
 %               (HG) Han Geerligs
 %               (VF) Vadim Frolov
+%               (MvdL) Marcel van der Linden
 %
 orgpath=getenv('PATH');
 quit_function=0;
@@ -122,10 +126,11 @@ try
             answer = inputdlg('Comments:','Commit''s comments');
             arguments = [arguments '-m"' char(answer) '"'];
         end
-        [~,result] = system(['git ',arguments,prog]);
+        [status,result] = system(['git ',arguments,prog]);
     end
     if nargout >= 1
         cmdout = strtrim(result);
+        statout = status;
     else
         % Display result instead of returning it
         % to suppress output of ans
